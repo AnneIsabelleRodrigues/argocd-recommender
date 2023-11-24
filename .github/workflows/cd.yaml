@@ -46,7 +46,8 @@ jobs:
       - name: update k8s
         run: |
           cd k8s
-          kustomize edit set image goapp=${{ matrix.image_repository }}:${{ github.sha }}
+          kustomize edit set image playlist-recommender-api=annecarvalho/app_api:${{ github.sha }}
+          kustomize edit set image playlist-recommender-ml=annecarvalho/app_ml:${{ github.sha }}
           cat kustomization.yaml
 
       - name: commit
