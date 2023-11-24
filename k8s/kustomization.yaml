@@ -8,11 +8,11 @@ resources:
 
 namespace: playlist-recommender
 
+
 images:
 - name: playlist-recommender-api
-  newTag: latest
   newName: annecarvalho/app_api
-
+  newTag: 82ab23c57a3528717dfcbfae13a067277bbf75a1
 - name: playlist-recommender-ml
-  newTag: latest
   newName: annecarvalho/app_ml
+  newTag: 82ab23c57a3528717dfcbfae13a067277bbf75a1
