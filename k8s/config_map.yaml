@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: configmap
 data:
-  image-tag: v1.0.0
+  image-tag: v2.0.0
   dataset-location: home/annecarvalho/project2-pv/shared
