@@ -25,7 +25,7 @@ jobs:
       - name: build image and push to docker hub
         uses: docker/build-push-action@v1.1.0
         with:
-          context: ${{ matrix.image_repository##*/ }}
+          context: ${{ matrix.image_repository }}
           repository: ${{ matrix.image_repository }}
           tags: ${{ github.sha }}, latest     
 
