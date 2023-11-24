@@ -14,12 +14,18 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u annecarvalho --password-stdin
+
       
       - name: build image and push to docker hub
         uses: docker/build-push-action@v1.1.0
         with:
-          username: annecarvalho
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          context: ${{ matrix.image_repository##*/ }}
           repository: ${{ matrix.image_repository }}
           tags: ${{ github.sha }}, latest     
 
