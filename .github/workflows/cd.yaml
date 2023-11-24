@@ -1,0 +1,25 @@
+name: CD
+on:
+  push:
+    branches: [main]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image_repository:
+          - annecarvalho/app_api
+          - annecarvalho/app_ml
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      
+      - name: build image and push to docker hub
+        uses: docker/build-push-action@v1.1.0
+        with:
+          username: annecarvalho
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: ${{ matrix.image_repository }}
+          tags: ${{ github.sha }}, latest     
+

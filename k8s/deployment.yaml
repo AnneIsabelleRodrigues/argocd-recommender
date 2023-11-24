@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: playlist-recommender-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: playlist-recommender-app
+  template:
+    metadata:
+      labels:
+        app: playlist-recommender-app
+    spec:
+      containers:
+        - name: playlist-recommender-app-container
+          imagePullPolicy: Always
+          image: annecarvalho/app_api:latest
+          ports:
+            - containerPort: 32168
+          volumeMounts:
+          - name: storage-annecarvalho
+            mountPath: "/shared"
+          env:
+          - name: dataset-path
+            valueFrom:
+              configMapKeyRef:
+                name: configmap
+                key: dataset-location
+          - name: image-tag
+            valueFrom:
+              configMapKeyRef:
+                name: configmap
+                key: image-tag
+      volumes:
+      - name: storage-annecarvalho
+        persistentVolumeClaim:
+          claimName: project2-pv-annecarvalho
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ml-recommender-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: playlist-recommender-ml
+  template:
+    metadata:
+      labels:
+        app: playlist-recommender-ml
+    spec:
+      containers:
+        - name: playlist-recommender-ml-container
+          imagePullPolicy: Always
+          image: annecarvalho/app_ml:latest
+          ports:
+            - containerPort: 32168
+          volumeMounts:
+          - name: storage-annecarvalho
+            mountPath: "/shared"
+          env:
+          - name: dataset_path
+            valueFrom:
+              configMapKeyRef:
+                name: configmap
+                key: dataset-location
+          - name: image_tag
+            valueFrom:
+              configMapKeyRef:
+                name: configmap
+                key: image-tag
+      volumes:
+      - name: storage-annecarvalho
+        persistentVolumeClaim:
+          claimName: project2-pv-annecarvalho
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: project2-pvc-annecarvalho
+spec:
+ accessModes:
+   - ReadWriteMany
+ storageClassName: standard
+ resources:
+   requests:
+     storage: 1Gi
+ volumeName: project2-pv-annecarvalho

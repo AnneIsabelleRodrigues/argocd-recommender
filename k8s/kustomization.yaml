@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- deployment.yaml
+- service.yaml
+- config_map.yaml
+
+namespace: playlist-recommender
+
+images:
+- name: playlist-recommender-api
+  newTag: latest
+  newName: annecarvalho/app_api
+
+- name: playlist-recommender-ml
+  newTag: latest
+  newName: annecarvalho/app_ml
