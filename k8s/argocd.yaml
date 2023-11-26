@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-api
+  namespace: argocd
+spec:
+  project: annecarvalho-project
+  source:
+    repoURL: https://github.com/AnneIsabelleRodrigues/argocd-recommender.git
+    path: ./k8s
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cannecarvalho
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-ml
+  namespace: argocd
+spec:
+  project: annecarvalho-project
+  source:
+    repoURL: https://github.com/AnneIsabelleRodrigues/argocd-recommender.git
+    path: ./k8s
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: annecarvalho
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+##argocd app create app-mlt --repo https://github.com/AnneIsabelleRodrigues/argocd-recommender.git --path ./k8s --project annecarvalho-project --dest-namespace annecarvalho --dest-server https://kubernetes.default.svc --sync-policy auto

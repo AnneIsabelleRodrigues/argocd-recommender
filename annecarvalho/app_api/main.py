@@ -19,8 +19,8 @@ app = Flask(__name__)
 def recommend():
     songs = request.get_json()
 
-    model = pd.read_pickle("../../rules.pkl")
-    data = pd.read_pickle("../../data.pkl")
+    model = pd.read_pickle("/modelo/rules.pkl")
+    data = pd.read_pickle("/modelo/data.pkl")
 
     musics = []
     pids = []

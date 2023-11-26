@@ -19,20 +19,30 @@ spec:
           ports:
             - containerPort: 32168
           volumeMounts:
-          - name: storage-annecarvalho
-            mountPath: "/shared"
+            - name: config-annecarvalho
+              mountPath: /config-storage
+            - name: storage-annecarvalho
+              mountPath: /modelo
           env:
-          - name: dataset-path
+          - name: dev-dataset1-path
             valueFrom:
               configMapKeyRef:
-                name: configmap
-                key: dataset-location
-          - name: image-tag
+                name: config_map
+                key: dataset1-location
+          - name: dev-dataset2-path
             valueFrom:
               configMapKeyRef:
-                name: configmap
-                key: image-tag
+                name: config_map
+                key: dataset2-location
+          - name: dev-datasetsongs-path
+            valueFrom:
+              configMapKeyRef:
+                name: config_map
+                key: datasetsongs-location
       volumes:
+      - name: config-annecarvalho
+        configMap:
+          name: config_map
       - name: storage-annecarvalho
         persistentVolumeClaim:
           claimName: project2-pv-annecarvalho
@@ -60,35 +70,35 @@ spec:
           ports:
             - containerPort: 32168
           volumeMounts:
-          - name: storage-annecarvalho
-            mountPath: "/shared"
+            - name: config-annecarvalho
+              mountPath: /config-storage
+            - name: storage-annecarvalho
+              mountPath: /modelo
           env:
-          - name: dataset_path
-            valueFrom:
-              configMapKeyRef:
-                name: configmap
-                key: dataset-location
-          - name: image_tag
-            valueFrom:
-              configMapKeyRef:
-                name: configmap
-                key: image-tag
+            - name: dev-dataset_path
+              valueFrom:
+                configMapKeyRef:
+                  name: config_map
+                  key: dataset-location
       volumes:
+      - name: config-annecarvalho
+        configMap:
+          name: config_map
       - name: storage-annecarvalho
         persistentVolumeClaim:
           claimName: project2-pv-annecarvalho
 
----
+# ---
 
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
- name: project2-pvc-annecarvalho
-spec:
- accessModes:
-   - ReadWriteMany
- storageClassName: standard
- resources:
-   requests:
-     storage: 1Gi
- volumeName: project2-pv-annecarvalho
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#  name: project2-pvc-annecarvalho
+# spec:
+#  accessModes:
+#    - ReadWriteMany
+#  storageClassName: standard
+#  resources:
+#    requests:
+#      storage: 1Gi
+#  volumeName: project2-pv-annecarvalho

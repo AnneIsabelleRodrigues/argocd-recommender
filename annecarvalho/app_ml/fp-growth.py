@@ -1,10 +1,12 @@
+import os
 import pandas as pd
 from mlxtend.preprocessing import TransactionEncoder
 from mlxtend.frequent_patterns import fpgrowth, association_rules
 
-file_path1 = '/home/datasets/2023_spotify_ds1.csv'
-file_path2 = '/home/datasets/2023_spotify_ds2.csv'
-file_paths = '/home/datasets/2023_spotify_songs.csv'
+file_path1 = os.environ.get('dev-dataset1-path')
+file_path2 = os.environ.get('dev-dataset2-path')
+file_paths = os.environ.get('dev-datasetsongs-path')
+
 
 playlist = pd.read_csv(file_path1, header=0)
 playlist2 = pd.read_csv(file_path2, header=0)
@@ -34,5 +36,5 @@ association_rules_df = association_rules(itemsets, metric="confidence", min_thre
 
 association_rules_df = association_rules_df[(association_rules_df["support"]>0.05) & (association_rules_df["confidence"]>0.1) & (association_rules_df["lift"]>5)].sort_values("confidence", ascending=False)
 
-association_rules_df.to_pickle("./rules.pkl")
-data.to_pickle("./data.pkl")
+association_rules_df.to_pickle("/modelo/rules.pkl")
+data.to_pickle("/modelo/data.pkl")
