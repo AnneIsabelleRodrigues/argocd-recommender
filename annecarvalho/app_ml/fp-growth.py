@@ -2,11 +2,19 @@ import os
 import pandas as pd
 from mlxtend.preprocessing import TransactionEncoder
 from mlxtend.frequent_patterns import fpgrowth, association_rules
+import ssl
+
+ssl._create_default_https_context = ssl._create_unverified_context
+
+# if __name__ == "__main__":
 
 file_path1 = os.environ.get('dev-dataset1-path')
 file_path2 = os.environ.get('dev-dataset2-path')
 file_paths = os.environ.get('dev-datasetsongs-path')
 
+# file_path1 =  "https://homepages.dcc.ufmg.br/~cunha/hosted/cloudcomp-2023s2-datasets/2023_spotify_ds1.csv"
+# file_path2 =  "https://homepages.dcc.ufmg.br/~cunha/hosted/cloudcomp-2023s2-datasets/2023_spotify_ds2.csv"
+# file_paths = "https://homepages.dcc.ufmg.br/~cunha/hosted/cloudcomp-2023s2-datasets/2023_spotify_songs.csv"
 
 playlist = pd.read_csv(file_path1, header=0)
 playlist2 = pd.read_csv(file_path2, header=0)

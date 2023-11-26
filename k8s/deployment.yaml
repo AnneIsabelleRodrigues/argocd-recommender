@@ -27,22 +27,22 @@ spec:
           - name: dev-dataset1-path
             valueFrom:
               configMapKeyRef:
-                name: config_map
+                name: config-map
                 key: dataset1-location
           - name: dev-dataset2-path
             valueFrom:
               configMapKeyRef:
-                name: config_map
+                name: config-map
                 key: dataset2-location
           - name: dev-datasetsongs-path
             valueFrom:
               configMapKeyRef:
-                name: config_map
+                name: config-map
                 key: datasetsongs-location
       volumes:
       - name: config-annecarvalho
         configMap:
-          name: config_map
+          name: config-map
       - name: storage-annecarvalho
         persistentVolumeClaim:
           claimName: project2-pv-annecarvalho
@@ -78,12 +78,12 @@ spec:
             - name: dev-dataset_path
               valueFrom:
                 configMapKeyRef:
-                  name: config_map
+                  name: config-map
                   key: dataset-location
       volumes:
       - name: config-annecarvalho
         configMap:
-          name: config_map
+          name: config-map
       - name: storage-annecarvalho
         persistentVolumeClaim:
           claimName: project2-pv-annecarvalho
