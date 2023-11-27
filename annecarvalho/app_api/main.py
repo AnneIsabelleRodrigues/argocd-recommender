@@ -4,6 +4,7 @@ from flask import jsonify
 from flask import Flask
 from flask import request
 import logging
+import os
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -12,7 +13,10 @@ app = Flask(__name__)
 
 @app.route('/api/recommend', methods=['POST'])
 def recommend():
+
     songs = request.get_json(force=True)
+
+    image_tag = os.environ.get('dev-image-tag')
 
     try:
         model = pd.read_pickle("/modelo/rules.pkl")
@@ -43,7 +47,7 @@ def recommend():
     return jsonify({
         "model_date": date,
         "playlist_ids": pids,
-        "version": "1.0"
+        "version": image_tag
     })
 
 if __name__ == '__main__':
