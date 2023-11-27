@@ -7,4 +7,4 @@ data:
   dataset1-location: "https://homepages.dcc.ufmg.br/~cunha/hosted/cloudcomp-2023s2-datasets/2023_spotify_ds1.csv"
   dataset2-location: "https://homepages.dcc.ufmg.br/~cunha/hosted/cloudcomp-2023s2-datasets/2023_spotify_ds2.csv"
   datasetsongs-location: "https://homepages.dcc.ufmg.br/~cunha/hosted/cloudcomp-2023s2-datasets/2023_spotify_songs.csv"
-  versao: 54f8f811e4862579dbfc48ee95fa66587e52e3f9
+  versao: d65659fd61edec51a7b1dc46c472aff8b10e117f
