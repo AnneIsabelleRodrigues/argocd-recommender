@@ -58,7 +58,7 @@ jobs:
           cd k8s
           sed -i 's/versao: .*/versao: ${{ github.sha }}/g' config-map.yaml
           echo ${{ github.event.inputs.TAG_NAME || github.event.release.tag_name }}
-          echo ${{ github.event.release.tag_name }}
+          echo ${{ github.ref }}
 
       - name: commit
         run: |
