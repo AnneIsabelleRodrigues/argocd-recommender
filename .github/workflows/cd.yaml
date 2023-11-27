@@ -52,10 +52,10 @@ jobs:
           kustomize edit set image playlist-recommender-ml=annecarvalho/app_ml:${{ github.event.release.tag_name }}
           cat kustomization.yaml
 
-      - name: atualizar valor de env no Deployment
+      - name: atualizar valor de env
         run: |
           cd k8s
-          sed -i "s/versao: .*/versao: ${{ github.event.release.tag_name }}/g" deployment.yaml
+          echo "versao: ${{ github.event.release.tag_name }}" > deployment.yaml
           cat deployment.yaml
 
       - name: commit
