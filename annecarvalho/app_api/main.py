@@ -3,25 +3,25 @@ import pandas as pd
 from flask import jsonify
 from flask import Flask
 from flask import request
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
 
 app = Flask(__name__)
 
-# class PlaylistBase(BaseModel):
-#     model_date: str
-#     playlist_ids: List[int]
-#     version: str
-
-
-# class Songs(BaseModel):
-#     songs: List[str]
-
 @app.route('/api/recommend', methods=['POST'])
 def recommend():
-    songs = request.get_json()
+    songs = request.get_json(force=True)
 
-    model = pd.read_pickle("/modelo/rules.pkl")
-    data = pd.read_pickle("/modelo/data.pkl")
-
+    try:
+        model = pd.read_pickle("/modelo/rules.pkl")
+        data = pd.read_pickle("/modelo/data.pkl")
+    except FileNotFoundError as e:
+        return jsonify({"error": "Arquivo não encontrado"}), 404
+    except Exception as e:
+        return jsonify({"error": f"Erro desconhecido: {e}"}), 500
+    
     musics = []
     pids = []
 
@@ -40,11 +40,11 @@ def recommend():
 
     date = now.strftime("%Y-%m-%d")
 
-    return {
+    return jsonify({
         "model_date": date,
         "playlist_ids": pids,
         "version": "1.0"
-    }
+    })
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=32168)

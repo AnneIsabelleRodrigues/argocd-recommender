@@ -9,7 +9,6 @@ spec:
     - protocol: TCP
       port: 32168
       targetPort: 32168
-  type: LoadBalancer
 
 ---
 
