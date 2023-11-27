@@ -30,7 +30,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: ${{ matrix.image_repository }}
           tags: |
-            ${{ github.event.release.tag_name }},latest
+            ${{ github.sha }},latest
           path: ${{ matrix.image_repository }}
 
   deploy:
@@ -49,14 +49,14 @@ jobs:
       - name: update k8s
         run: |
           cd k8s
-          kustomize edit set image playlist-recommender-api=annecarvalho/app_api:${{ github.event.release.tag_name }}
-          kustomize edit set image playlist-recommender-ml=annecarvalho/app_ml:${{ github.event.release.tag_name }}
+          kustomize edit set image playlist-recommender-api=annecarvalho/app_api:${{ github.sha }}
+          kustomize edit set image playlist-recommender-ml=annecarvalho/app_ml:${{ github.sha }}
           cat kustomization.yaml
 
       - name: atualizar valor de env
         run: |
           cd k8s
-          echo "versao: ${{ github.event.release.tag_name }}" > deployment.yaml
+          echo "versao: ${{ github.sha }}" > deployment.yaml
           cat deployment.yaml
 
       - name: commit
