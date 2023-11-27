@@ -29,7 +29,8 @@ jobs:
           username: annecarvalho
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: ${{ matrix.image_repository }}
-          tags: ${{ github.event.release.tag_name }}, latest
+          tags: |
+            ${{ github.event.release.tag_name }},latest
           path: ${{ matrix.image_repository }}
 
   deploy:
