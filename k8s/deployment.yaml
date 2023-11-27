@@ -24,6 +24,8 @@ spec:
             - name: storage-annecarvalho
               mountPath: /modelo
           env:
+          - name: versao
+            value: v1.0
           - name: dev-dataset1-path
             valueFrom:
               configMapKeyRef:

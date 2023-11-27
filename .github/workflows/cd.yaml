@@ -2,6 +2,8 @@ name: CD
 on:
   push:
     branches: [main]
+  release:
+    types: [published]
 jobs:
   build:
     name: Build
@@ -27,7 +29,7 @@ jobs:
           username: annecarvalho
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: ${{ matrix.image_repository }}
-          tags: ${{ github.sha }}, latest
+          tags: ${{ github.event.release.tag_name }}, latest
           path: ${{ matrix.image_repository }}
 
   deploy:
@@ -46,9 +48,15 @@ jobs:
       - name: update k8s
         run: |
           cd k8s
-          kustomize edit set image playlist-recommender-api=annecarvalho/app_api:${{ github.sha }}
-          kustomize edit set image playlist-recommender-ml=annecarvalho/app_ml:${{ github.sha }}
+          kustomize edit set image playlist-recommender-api=annecarvalho/app_api:${{ github.event.release.tag_name }}
+          kustomize edit set image playlist-recommender-ml=annecarvalho/app_ml:${{ github.event.release.tag_name }}
           cat kustomization.yaml
+
+      - name: atualizar valor de env no Deployment
+        run: |
+          cd k8s
+          sed -i "s/versao: .*/versao: ${{ github.event.release.tag_name }}/g" deployment.yaml
+          cat deployment.yaml
 
       - name: commit
         run: |
