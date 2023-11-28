@@ -16,7 +16,7 @@ def recommend():
 
     songs = request.get_json(force=True)
 
-    image_tag = os.environ.get('dev-image-tag')
+    imagetag = os.environ.get('dev-image-tag')
 
     try:
         model = pd.read_pickle("/modelo/rules.pkl")
@@ -47,7 +47,7 @@ def recommend():
     return jsonify({
         "model_date": date,
         "playlist_ids": pids,
-        "version": image_tag
+        "version": imagetag
     })
 
 if __name__ == '__main__':
