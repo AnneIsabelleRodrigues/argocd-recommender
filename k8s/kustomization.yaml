@@ -12,7 +12,7 @@ namespace: annecarvalho
 images:
 - name: playlist-recommender-api
   newName: annecarvalho/app_api
-  newTag: 461b78c101e583f416cbdcb3f47f213dade5d5bb
+  newTag: 610933d6869b021007019c015f10d52501e17642
 - name: playlist-recommender-ml
   newName: annecarvalho/app_ml
-  newTag: 461b78c101e583f416cbdcb3f47f213dade5d5bb
+  newTag: 610933d6869b021007019c015f10d52501e17642
